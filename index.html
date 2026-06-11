@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agro Forte, Futuro Sustentável - Agrinho 2026</title>
+    <style>
+        /* ==========================================================================
+           1. VARIÁVEIS DE CORES (Para o Light e Dark Mode)
+           ========================================================================== */
+        :root {
+            --bg-principal: #f4f7f5;
+            --bg-card: #ffffff;
+            --texto: #2d3a34;
+            --cor-primaria: #2e7d32; /* Verde Produção */
+            --cor-secundaria: #8d6e63; /* Tom de Terra */
+            --borda-card: #e0e0e0;
+        }
+
+        [data-theme="dark"] {
+            --bg-principal: #0a1128; /* Azul escuro tecnológico */
+            --bg-card: #101f42;
+            --texto: #e2e8f0;
+            --cor-primaria: #00ff66; /* Verde Neon Tech */
+            --cor-secundaria: #00b4d8; /* Azul Tech */
+            --borda-card: #1e293b;
+        }
+
+        /* Configurações Gerais */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-principal);
+            color: var(--texto);
+            transition: background-color 0.3s, color 0.3s;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        main {
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        /* Botão do Dark Mode */
+        .btn-theme {
+            background-color: var(--cor-primaria);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        [data-theme="dark"] .btn-theme {
+            color: #0a1128;
+        }
+
+        section {
+            margin-bottom: 50px;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--cor-primaria);
+            padding-bottom: 10px;
+        }
+
+        /* ==========================================================================
+           2. ESTILO DOS CARDS INTERATIVOS (FLIP CARDS)
+           ========================================================================== */
+        .container-cards {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            width: 300px;
+            height: 200px;
+            perspective: 1000px; /* Cria o efeito 3D */
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        /* Gira o card ao passar o mouse */
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden; /* Esconde a parte de trás enquanto vira */
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+            border-radius: 12px;
+            border: 1px solid var(--borda-card);
+        }
+
+        /* Frente do Card (Problema) */
+        .card-front {
+            background-color: var(--bg-card);
+            color: var(--texto);
+        }
+        .card-front h3 { color: #d32f2f; } /* Destaque para o problema */
+
+        /* Verso do Card (Solução) */
+        .card-back {
+            background-color: var(--cor-primaria);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        /* ==========================================================================
+           3. ESTILO DOS GRÁFICOS EM CSS (BARRAS DE PROGRESSO)
+           ========================================================================== */
+        .grafico-container {
+            background-color: var(--bg-card);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--borda-card);
+        }
+
+        .barra-item {
+            margin-bottom: 20px;
+        }
+
+        .barra-item label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .barra-fundo {
+            background-color: var(--borda-card);
+            border-radius: 10px;
+            width: 100%;
+            height: 25px;
+            overflow: hidden;
+        }
+
+        /* A animação acontece mudando a largura de 0% para o valor final */
+        .barra-preenchimento {
+            height: 100%;
+            width: 0%; 
+            background-color: var(--cor-secundaria);
+            border-radius: 10px;
+            transition: width 1.5s ease-in-out; /* Transição suave */
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .barra-preenchimento span {
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Agro Forte, Futuro Sustentável</h1>
+        <button class="btn-theme" id="botaoTema">Alternar Modo</button>
+    </header>
+
+    <main>
+        <section>
+            <h2>Desafios vs. Soluções Sustentáveis</h2>
+            <p>Passe o mouse sobre os cartões para ver como a tecnologia equilibra a produção e o meio ambiente.</p>
+            
+            <div class="container-cards">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="card-front">
+                            <h3>⚠️ Desperdício de Água</h3>
+                            <p>Irrigação excessiva gasta recursos hídricos preciosos.</p>
+                        </div>
+                        <div class="card-back">
+                            <h3>🌱 Sensores de Gotejamento</h3>
+                            <p>Molha apenas a raiz da planta com a quantidade exata necessária.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="card-front">
+                            <h3>⚠️ Excesso de Defensivos</h3>
+                            <p>Aplicação em toda a lavoura prejudica o solo.</p>
+                        </div>
+                        <div class="card-back">
+                            <h3>🛸 Drones e IA</h3>
+                            <p>Identificam pragas e aplicam o produto somente onde é necessário.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Indicadores de Impacto (Equilíbrio)</h2>
+            <p>Veja os resultados reais da aplicação de tecnologia sustentável no campo.</p>
+
+            <div class="grafico-container">
+                <div class="barra-item">
+                    <label>Economia de Água com Irrigação Inteligente</label>
+                    <div class="barra-fundo">
+                        <div class="barra-preenchimento" data-width="45%">
+                            <span>45%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="barra-item">
+                    <label>Redução de Emissão de Carbono (Tratores Elétricos)</label>
+                    <div class="barra-fundo">
+                        <div class="barra-preenchimento" data-width="30%">
+                            <span>30%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="barra-item">
+                    <label>Preservação de Mata Nativa (Fazenda Modelo)</label>
+                    <div class="barra-fundo">
+                        <div class="barra-preenchimento" data-width="80%">
+                            <span>80%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // --- 1. Lógica do Dark / Light Mode ---
+        const botaoTema = document.getElementById('botaoTema');
+        const htmlGeral = document.documentElement;
+
+        botaoTema.addEventListener('click', () => {
+            // Verifica qual o tema atual e inverte
+            if (htmlGeral.getAttribute('data-theme') === 'dark') {
+                htmlGeral.setAttribute('data-theme', 'light');
+            } else {
+                htmlGeral.setAttribute('data-theme', 'dark');
+            }
+        });
+
+        // --- 2. Lógica de Animação dos Gráficos ---
+        // Quando a página carrega, o JavaScript faz as barras crescerem até a porcentagem certa
+        window.addEventListener('DOMContentLoaded', () => {
+            const barras = document.querySelectorAll('.barra-preenchimento');
+            
+            // Define um pequeno tempo antes de animar para o efeito ficar visível
+            setTimeout(() => {
+                barras.forEach(barra => {
+                    const larguraFinal = barra.getAttribute('data-width');
+                    barra.style.width = larguraFinal;
+                });
+            }, 300);
+        });
+    </script>
+</body>
+</html>
